@@ -1,14 +1,16 @@
 import VideoListEntry from './VideoListEntry.js';
 
-var VideoList = (props) => (
-  <div className="video-list">
-  { 
-    props.videos.map((v, k) => {
-        return <VideoListEntry video={v} key={k}/>;
-    })
-  } 
-  </div>
-);
+class VideoList extends React.Component {
+  render() {
+    return <div className="video-list">
+            { 
+              this.props.videos.map((v, k) => {
+                  return <VideoListEntry video={v} key={k}/>;
+              })
+            } 
+            </div>;
+  }
+};
 
 // PropTypes tell other developers what `props` a component expects
 // Warnings will be shown in the console when the defined rules are violated
@@ -21,3 +23,14 @@ VideoList.propTypes = {
 export default VideoList;
 
 // need Class to instantiate each div of Video-List
+
+
+// var VideoList = (props) => (
+//   <div className="video-list">
+//   { 
+//     props.videos.map((v, k) => {
+//         return <VideoListEntry video={v} key={k}/>;
+//     })
+//   } 
+//   </div>
+// );
