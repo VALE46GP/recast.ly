@@ -3,19 +3,45 @@ import exampleVideoData from '../data/exampleVideoData.js';
 import VideoPlayer from './VideoPlayer.js';
 import Search from './Search.js';
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      videos: [],
+      currentVideo: null
+    };
+  }
+  handleEntryClick(video) {
+    this.state({
+      currentVideo: video
+    });
+  }
+  getYouTubeVideos(query) {
+    var option = {
+      key: this.props.API_KEY,
+      query: query
+    };
+    
+    this.props.seachYouTube(options, (videos) => 
+      this.setState({
+        videos: videos,
+        currentVideo: videos[0]
+      })
+    );
+  }
+
   render() {
     return <div>
             <nav className="navbar">
               <div className="col-md-6 offset-md-3">
-                <div><h5><em><Search /> </em></h5></div>
+                <div><h5><em><Search handleSearch={this.getYouTubeVideos.bind(this)}/> </em></h5></div>
               </div>
             </nav>
             <div className="row">
               <div className="col-md-7">
-                <div><h5><em><VideoPlayer video={exampleVideoData[0]}/> </em> </h5></div>
+                <div><h5><em><VideoPlayer video={this.state.currentVideo}/> </em> </h5></div>
               </div>
               <div className="col-md-5">
-                <div><h5><em><VideoList videos={exampleVideoData}/> </em> </h5></div>
+                <div><h5><em><VideoList videos={this.state.videos} handleEntryClick={this.handleEntryClick.bind(this)}/> </em> </h5></div>
               </div>
             </div>
           </div>;
@@ -26,21 +52,3 @@ class App extends React.Component {
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
 export default App;
-
-// var App = () => (
-//   <div>
-//     <nav className="navbar">
-//       <div className="col-md-6 offset-md-3">
-//         <div><h5><em><Search /> </em></h5></div>
-//       </div>
-//     </nav>
-//     <div className="row">
-//       <div className="col-md-7">
-//         <div><h5><em><VideoPlayer video={exampleVideoData[0]}/> </em> </h5></div>
-//       </div>
-//       <div className="col-md-5">
-//         <div><h5><em><VideoList videos={exampleVideoData}/> </em> </h5></div>
-//       </div>
-//     </div>
-//   </div>
-// );
